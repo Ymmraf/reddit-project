@@ -25,14 +25,18 @@ const subredditsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchSubreddits.pending, (state, action) => {
-
+                state.isLoading = true
+                state.hasError = false
             })
             .addCase(fetchSubreddits.fulfilled, (state, action) => {
-                
+                state.isLoading = false
+                state.hasError = false
             })
             .addCase(fetchSubreddits.rejected, (state, action) => {
-                
+                state.isLoading = false
+                state.hasError = true
             })
     }
 })
 
+export default subredditsSlice.reducer

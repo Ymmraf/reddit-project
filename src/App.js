@@ -1,5 +1,6 @@
 import Header from './components/header/Header';
 import Body from './features/Body/Body';
+import SubReddit from './features/SubReddit/SubReddit';
 import './App.css';
 
 
@@ -7,6 +8,7 @@ function App() {
   return (
     <>
       <Header />
+      <SubReddit />
       <Body />
     </>
   );
