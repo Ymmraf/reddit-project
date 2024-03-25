@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { randomColor } from "../utilities/randomColor";
 
 const initialState = {
     subreddits: [],
@@ -11,7 +12,6 @@ export const fetchSubreddits = createAsyncThunk(
     async () => {
         const response = await fetch('https://www.reddit.com/subreddits.json')
         const json = await response.json()
-        console.log(json.data)
         return json
     }
 )
@@ -32,9 +32,10 @@ const subredditsSlice = createSlice({
                 state.isLoading = false
                 state.hasError = false
                 state.subreddits = action.payload.data.children.map((item) => {
+                    const url = `${item.data.url.slice(1)}.json`
                     return {
                         title: item.data.display_name_prefixed,
-                        url: item.data.url
+                        url: url,
                     }
                 })
             })

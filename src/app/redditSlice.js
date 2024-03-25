@@ -7,11 +7,13 @@ const initialState = {
     hasError : false,
 }
 
+const rootUri = 'https://www.reddit.com/'
+
 export const fetchPost = createAsyncThunk(
     'reddit/fetchPost',
-    async (uri, thunkAPI) => {
+    async (uri = `/r/popular.json`, thunkAPI) => {
         try {
-            const response = await fetch('https://www.reddit.com/r/popular.json')
+            const response = await fetch(`${rootUri}${uri}`)
             const json = await response.json()
             return json
         } catch (e) {

@@ -11,8 +11,9 @@ export default function Header() {
               Minimal
             </h1>
           </div>
-          <div>
+          <div className="flex">
             <input className="pl-6 w-full h-10 bg-gray-200 rounded-3xl" type="text" placeholder="Search"/>
+            <button className="rounded-full duration-300 font-bold text-white ml-8 px-6 bg-orange-500 hover:bg-orange-600">Search</button>
           </div>
           <div></div>
         </nav>

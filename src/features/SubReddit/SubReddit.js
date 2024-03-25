@@ -1,23 +1,43 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchSubreddits } from "../../app/subredditsSlice"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSubreddits } from "../../app/subredditsSlice";
 
-export default function SubReddit() {
-    const dispatch = useDispatch()
-    const subredditData = useSelector(state => state.subreddits.subreddits)
-    useEffect(() => {
-        dispatch(fetchSubreddits())
-    }, [])
+export default function SubReddit({ onClick }) {
+  const dispatch = useDispatch();
+  const subredditData = useSelector((state) => state.subreddits.subreddits);
+  const { isLoading } = useSelector((state) => state.subreddits);
 
+  useEffect(() => {
+    dispatch(fetchSubreddits());
+  }, []);
+
+  if (isLoading) {
     return (
-        <>
-            <section className="mt-20 pt-3 w-10/12 m-auto">
-                <ul className="flex flex-wrap justify-evenly gap-x-5 gap-y-4">
-                    {
-                        subredditData.map(item => <li className="basis-40">{item.title}</li>)
-                    }
-                </ul>
-            </section>
-        </>
-    )
+      <>
+        <section className="mt-20 pt-3 m-auto shadow-md pb-4">
+          <p className="text-center mt-20">Loading . . .</p>
+        </section>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <section className="mt-20 pt-3 m-auto shadow-md pb-4">
+        <ul className="flex flex-wrap justify-center gap-x-2 gap-y-4 w-10/12 m-auto">
+          {subredditData.map((item) => (
+            <button
+              className="rounded-full duration-300 p-2 hover:bg-gray-300"
+              onClick={() => onClick(item.url)}
+            >
+              <div className="flex">
+                <div className="bg-orange-400 w-6 h-6 rounded-full"></div>
+                <p className="pl-2">{item.title}</p>
+              </div>
+            </button>
+          ))}
+        </ul>
+      </section>
+    </>
+  );
 }
