@@ -1,4 +1,4 @@
-import Header from './components/header/Header';
+import Header from './features/header/Header';
 import Body from './features/Body/Body';
 import SubReddit from './features/SubReddit/SubReddit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,23 +14,10 @@ function App() {
     dispatch(fetchPost(uri))
   }
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value)
-  }
-
-  const handleSubmit = () => {
-    if(!search) {
-      return
-    } else {
-      const queryString = `search.json?q=${search}`
-      setSearch('')
-      dispatch(fetchPost(queryString))
-    }
-  }
 
   return (
     <>
-      <Header onSubmit={handleSubmit} onChange={handleSearchChange} value={search}/>
+      <Header/>
       <SubReddit onClick={handleClickSubreddits}/>
       <Body />
     </>

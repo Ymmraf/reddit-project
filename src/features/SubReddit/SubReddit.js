@@ -6,7 +6,7 @@ import { setSelectedSubreddits } from "../../app/subredditsSlice";
 export default function SubReddit({ onClick }) {
   const dispatch = useDispatch();
   const subredditData = useSelector((state) => state.subreddits.subreddits);
-  const { selected, isLoading } = useSelector((state) => state.subreddits);
+  const { selected, isLoading, hasError } = useSelector((state) => state.subreddits);
 
   useEffect(() => {
     dispatch(fetchSubreddits());
@@ -49,34 +49,21 @@ export default function SubReddit({ onClick }) {
         </section>
       </>
     );
+  } else if (hasError) {
+    return 
+  } else {
+    return (
+        <>
+          <section className="mt-20 pt-3 m-auto shadow-md pb-4">
+            <ul className="flex flex-wrap justify-center gap-x-2 gap-y-4 w-10/12 m-auto">
+              {subredditData.map((item, index) => (
+                <SubRedditButton url={item.url} title={item.title} key={index}/>
+              ))}
+            </ul>
+          </section>
+        </>
+      );
   }
 
-  return (
-    <>
-      <section className="mt-20 pt-3 m-auto shadow-md pb-4">
-        <ul className="flex flex-wrap justify-center gap-x-2 gap-y-4 w-10/12 m-auto">
-          {subredditData.map((item, index) => (
-            <SubRedditButton url={item.url} title={item.title} key={index}/>
-            // <button
-            //   className={
-            //     item.title === selected &&
-            //     "rounded-full duration-300 p-2 hover:bg-gray-300"
-            //   }
-            //   //   className="rounded-full duration-300 p-2 hover:bg-gray-300"
-            //   onClick={() => {
-            //     onClick(item.url);
-            //     dispatch(setSelectedSubreddits(item.title));
-            //   }}
-            //   key={index}
-            // >
-            //   <div className="flex">
-            //     <div className="bg-orange-400 w-6 h-6 rounded-full"></div>
-            //     <p className="pl-2 font-bold">{item.title}</p>
-            //   </div>
-            // </button>
-          ))}
-        </ul>
-      </section>
-    </>
-  );
+  
 }

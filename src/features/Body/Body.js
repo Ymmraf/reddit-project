@@ -3,11 +3,12 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPost } from "../../app/redditSlice"
 import { mockComponent } from "react-dom/test-utils"
+import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers"
 
 export default function Body() {
     const dispatch = useDispatch()
     const postData = useSelector((state) => state.reddit)
-    const { isLoading } = useSelector(state => state.reddit)
+    const { isLoading, hasError } = useSelector(state => state.reddit)
     const [post, setPost] = useState()
 
     useEffect(() => {
@@ -29,15 +30,23 @@ export default function Body() {
                 </div>
             </>
         )
+    } else if (hasError) {
+        return (
+            <>
+                <div className="mt-32 flex justify-center">
+                    <p className="text-center font-bold text-4xl">Something went wrong, Please check your connection or try again later.</p>
+                </div>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <section className="w-8/12 bg-gray-200 m-auto mt-4 p-4 h-full">
+                    {
+                        postData.post.map((item,index) => <Post data={item} key={index}/>)
+                    }
+                </section>
+            </>
+        )
     }
-
-    return (
-        <>
-            <section className="w-8/12 bg-gray-200 m-auto mt-4 p-4 h-full">
-                {
-                    postData.post.map((item,index) => <Post data={item} key={index}/>)
-                }
-            </section>
-        </>
-    )
 }
