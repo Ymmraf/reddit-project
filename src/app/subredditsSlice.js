@@ -11,7 +11,7 @@ export const fetchSubreddits = createAsyncThunk(
     async () => {
         const response = await fetch('https://www.reddit.com/subreddits.json')
         const json = await response.json()
-        console.log(json)
+        console.log(json.data)
         return json
     }
 )
@@ -31,6 +31,12 @@ const subredditsSlice = createSlice({
             .addCase(fetchSubreddits.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.hasError = false
+                state.subreddits = action.payload.data.children.map((item) => {
+                    return {
+                        title: item.data.display_name_prefixed,
+                        url: item.data.url
+                    }
+                })
             })
             .addCase(fetchSubreddits.rejected, (state, action) => {
                 state.isLoading = false

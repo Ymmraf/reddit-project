@@ -24,9 +24,7 @@ const redditSlice = createSlice({
     name: 'reddit',
     initialState,
     reducers: {
-        log(state) {
-            console.log('test reducer')
-        }
+
     },
     extraReducers: (builder) => {
         builder
@@ -59,5 +57,4 @@ const redditSlice = createSlice({
     }
 })
 
-export const { log } = redditSlice.actions
 export default redditSlice.reducer

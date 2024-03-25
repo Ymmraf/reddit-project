@@ -5,7 +5,7 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function Post(props) {
   return (
-    <div className="w-full bg-white p-6 grid grid-cols-post gap-x-3 rounded-xl">
+    <div className="w-full bg-white p-6 grid grid-cols-post gap-x-3 rounded-xl mb-4">
       <div>
         <div className="flex justify-center mb-2 text-gray-500">
           <FontAwesomeIcon icon={faArrowUp} className="text-3xl"/>
