@@ -25,10 +25,11 @@ export default function SubReddit({ onClick }) {
     <>
       <section className="mt-20 pt-3 m-auto shadow-md pb-4">
         <ul className="flex flex-wrap justify-center gap-x-2 gap-y-4 w-10/12 m-auto">
-          {subredditData.map((item) => (
+          {subredditData.map((item, index) => (
             <button
               className="rounded-full duration-300 p-2 hover:bg-gray-300"
               onClick={() => onClick(item.url)}
+              key={index}
             >
               <div className="flex">
                 <div className="bg-orange-400 w-6 h-6 rounded-full"></div>

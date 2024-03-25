@@ -19,10 +19,6 @@ export default function Body() {
         setPost(data)
     }
 
-    const fetchOnSubreddits = (uri) => {
-        dispatch(fetchPost(uri))
-    }
-
     if(isLoading) {
         return (
             <>
@@ -35,9 +31,8 @@ export default function Body() {
         <>
             <section className="w-5/12 bg-gray-200 m-auto mt-4 p-4 h-full">
                 {
-                    postData.post.map(item => <Post data={item}/>)
+                    postData.post.map((item,index) => <Post data={item} key={index}/>)
                 }
-
             </section>
         </>
     )

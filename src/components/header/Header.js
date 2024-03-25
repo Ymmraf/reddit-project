@@ -1,4 +1,4 @@
-export default function Header() {
+export default function Header({onChange, value}) {
   return (
     <>
       <header>
@@ -12,8 +12,8 @@ export default function Header() {
             </h1>
           </div>
           <div className="flex">
-            <input className="pl-6 w-full h-10 bg-gray-200 rounded-3xl" type="text" placeholder="Search"/>
-            <button className="rounded-full duration-300 font-bold text-white ml-8 px-6 bg-orange-500 hover:bg-orange-600">Search</button>
+            <input className="pl-6 w-full h-10 bg-gray-200 rounded-3xl" name="search" type="text" placeholder="Search" onChange={onChange} value={value}/>
+            <button type="submit" className="rounded-full duration-300 font-bold text-white ml-8 px-6 bg-orange-500 hover:bg-orange-600">Search</button>
           </div>
           <div></div>
         </nav>
