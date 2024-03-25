@@ -48,7 +48,8 @@ const redditSlice = createSlice({
                     selftext : item.data.selftext,
                     author : item.data.author,
                     comments : item.data.num_comments,
-                    votes : item.data.ups
+                    votes : item.data.ups,
+                    link : item.data.permalink
                 }
             })
         })

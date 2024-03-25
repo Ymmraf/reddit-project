@@ -9,18 +9,28 @@ import './App.css';
 function App() {
   const dispatch = useDispatch()
   const [search, setSearch] = useState()
+
   const handleClickSubreddits = (uri) => {
     dispatch(fetchPost(uri))
   }
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
-    console.log(search)
+  }
+
+  const handleSubmit = () => {
+    if(!search) {
+      return
+    } else {
+      const queryString = `search.json?q=${search}`
+      setSearch('')
+      dispatch(fetchPost(queryString))
+    }
   }
 
   return (
     <>
-      <Header onChange={handleSearchChange} value={search}/>
+      <Header onSubmit={handleSubmit} onChange={handleSearchChange} value={search}/>
       <SubReddit onClick={handleClickSubreddits}/>
       <Body />
     </>

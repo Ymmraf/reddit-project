@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { randomColor } from "../utilities/randomColor";
 
 const initialState = {
     subreddits: [],
     isLoading: false,
-    hasError: false
+    hasError: false,
+    selected: ''
 }
 
 export const fetchSubreddits = createAsyncThunk(
@@ -20,11 +20,13 @@ const subredditsSlice = createSlice({
     name: 'subreddits',
     initialState,
     reducers: {
-
+        setSelectedSubreddits: (state, action) => {
+            state.selected = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchSubreddits.pending, (state, action) => {
+            .addCase(fetchSubreddits.pending, (state) => {
                 state.isLoading = true
                 state.hasError = false
             })
@@ -39,11 +41,12 @@ const subredditsSlice = createSlice({
                     }
                 })
             })
-            .addCase(fetchSubreddits.rejected, (state, action) => {
+            .addCase(fetchSubreddits.rejected, (state) => {
                 state.isLoading = false
                 state.hasError = true
             })
     }
 })
 
+export const { setSelectedSubreddits } = subredditsSlice.actions
 export default subredditsSlice.reducer
