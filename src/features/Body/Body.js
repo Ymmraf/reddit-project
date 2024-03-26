@@ -2,8 +2,6 @@ import Post from "../Post/Post"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPost } from "../../app/redditSlice"
-import { mockComponent } from "react-dom/test-utils"
-import { toHaveAccessibleErrorMessage } from "@testing-library/jest-dom/matchers"
 
 export default function Body() {
     const dispatch = useDispatch()
@@ -20,13 +18,12 @@ export default function Body() {
         setPost(data)
     }
 
-    console.log(postData)
+    // console.log(postData)
 
     if(isLoading) {
         return (
             <>
                 <div className="mt-32 flex justify-center">
-                    {/* <div className="w-8 h-8 bg-orange-500 animate-spin"></div> */}
                     <div className="spinner"></div>
                 </div>
             </>
