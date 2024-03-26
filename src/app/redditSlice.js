@@ -15,6 +15,7 @@ export const fetchPost = createAsyncThunk(
         try {
             const response = await fetch(`${rootUri}${uri}`)
             const json = await response.json()
+            // console.log(json)
             return json
         } catch (e) {
             throw new Error("Unable to fetch data from uri.")
