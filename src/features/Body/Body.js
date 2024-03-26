@@ -24,7 +24,6 @@ export default function Body() {
         return (
             <>
                 <div className="mt-32 flex justify-center">
-                    {/* <div className="w-8 h-8 bg-orange-500 animate-spin"></div> */}
                     <div className="spinner"></div>
                 </div>
             </>

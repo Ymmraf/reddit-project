@@ -29,7 +29,7 @@ export const fetchComments = createAsyncThunk(
         })
         // console.log('This is mapped comments')
         // console.log(mappedComments)
-        console.log({url, mappedComments})
+        // console.log({url, mappedComments})
         return {url, mappedComments}
     }
 )
