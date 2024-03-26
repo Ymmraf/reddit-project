@@ -26,7 +26,8 @@ export default function Body() {
         return (
             <>
                 <div className="mt-32 flex justify-center">
-                    <div className="w-8 h-8 bg-orange-500 animate-spin"></div>
+                    {/* <div className="w-8 h-8 bg-orange-500 animate-spin"></div> */}
+                    <div className="spinner"></div>
                 </div>
             </>
         )
@@ -41,7 +42,10 @@ export default function Body() {
     } else {
         return (
             <>
-                <section className="w-8/12 bg-gray-200 m-auto mt-4 p-4 h-full">
+                <section className="
+                w-full bg-gray-200 m-auto mt-4 p-4 h-full
+                lg:w-8/12
+                ">
                     {
                         postData.post.map((item,index) => <Post data={item} key={index}/>)
                     }

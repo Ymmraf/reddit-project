@@ -23,14 +23,14 @@ export default function Header() {
   return (
     <>
       <header>
-        <nav className="font-mono py-4 shadow-md fixed top-0 left-0 right-0 z-50 bg-white grid grid-cols-3">
+        <nav className="
+        font-mono shadow-md py-4 fixed top-0 left-0 right-0 z-50 bg-white 
+        grid grid-cols-1
+        sm:grid-cols-2
+        lg:grid-cols-3
+        ">
           <div>
-            <h1 className="pl-8 text-4xl font-bold text-left underline underline-offset-8">
-              <span className="text-orange-500 underline underline-offset-8">
-                Reddit
-              </span>
-              Minimal
-            </h1>
+            <h1 className="text-center text-2xl mb-2 sm:pl-2 sm:font-bold sm:text-left sm:underline sm:underline-offset-8 md:inline md:pl-4 md:text-3xl md:font-bold md:text-left md:underline md:underline-offset-8 lg:inline lg:pl-8 lg:text-4xl lg:font-bold lg:text-left lg:underline lg:underline-offset-8"><span className="text-orange-500 underline underline-offset-8">Reddit</span>Minimal</h1>
           </div>
           <div className="flex">
             <input className="pl-6 w-full h-10 bg-gray-200 rounded-3xl" name="search" type="text" placeholder="Search" onChange={handleSearchChange} value={search}/>
