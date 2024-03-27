@@ -19,9 +19,10 @@ export const fetchComments = createAsyncThunk(
                 comments.push(comment)
             }
         });
-        // console.log(comments)
+        console.log(comments)
         const mappedComments = comments.map(comment => {
             return {
+                id: comment.data.id,
                 author: comment.data.author,
                 body: comment.data.body,
                 ups: comment.data.ups

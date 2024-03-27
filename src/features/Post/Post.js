@@ -9,15 +9,95 @@ import { useState } from "react";
 
 export default function Post(props) {
   const dispatch = useDispatch();
-  const comments = useSelector(state => state.comments)
-  const [dataIsLoaded, setDataIsLoaded] = useState(false)
+  const post = useSelector((state) => state.reddit)
+  const comments = useSelector((state) => state.comments);
+  const [dataIsLoaded, setDataIsLoaded] = useState(false);
+  const [vote, setVote] = useState(props.data.votes);
+  const [voteStatus, setVoteStatus] = useState(null);
+
+  console.log(post)
 
   const handleClickComment = (url) => {
-    if(dataIsLoaded) {
-      toggleDisplayComment(url)
+    if (dataIsLoaded) {
+      toggleDisplayComment(url);
     } else {
       dispatch(fetchComments(url));
-      setDataIsLoaded(true)
+      setDataIsLoaded(true);
+    }
+  };
+
+  const clearVoteColor = () => {
+    document.getElementById(props.data.link + "up").className = "flex hover:text-green-500 text-gray-500";
+    document.getElementById(props.data.link + "down").className = "flex hover:text-red-500 text-gray-500";
+    document.getElementById(props.data.link + "vote").className = "text-gray-500 font-bold";
+    document.getElementById(props.data.link + "lgUp").className = "mb-2 text-gray-500 hover:text-green-500"
+    document.getElementById(props.data.link + "lgDown").className = "mb-2 text-gray-500 hover:text-red-500"
+    document.getElementById(props.data.link + "lgVote").className = "text-center font-bold text-gray-500"
+  };
+
+  const changeVoteColor = (button) => {
+    const upButton = document.getElementById(props.data.link + "up");
+    const downButton = document.getElementById(props.data.link + "down");
+    const lgUpButton = document.getElementById(props.data.link + "lgUp");
+    const lgDownButton = document.getElementById(props.data.link + "lgDown");
+    const number = document.getElementById(props.data.link + "vote");
+    const lgNumber = document.getElementById(props.data.link + "lgVote")
+    if (button == "up") {
+      if (upButton.className == "flex hover:text-green-500 text-gray-500") {
+        upButton.className = "flex text-green-500";
+        lgUpButton.classList = "mb-2 text-green-500"
+        number.className = "font-bold text-green-500";
+        lgNumber.className = "text-center font-bold text-green-500"
+      } else {
+        clearVoteColor();
+      }
+    } else if (button == "down") {
+      if (downButton.className == "flex hover:text-red-500 text-gray-500") {
+        downButton.className = "flex text-red-500";
+        lgDownButton.className = "mb-2 text-red-500"
+        number.className = "font-bold text-red-500";
+        lgNumber.className = "text-center font-bold text-red-500"
+      } else {
+        clearVoteColor();
+      }
+    }
+  };
+
+  const handleClickVote = (vote) => {
+    if (!voteStatus) {
+      if (vote === "up") {
+        setVote((vote) => vote + 1);
+        setVoteStatus("up");
+        changeVoteColor("up");
+      } else if (vote === "down") {
+        setVote((vote) => vote - 1);
+        setVoteStatus("down");
+        changeVoteColor("down");
+      }
+    } else if (voteStatus) {
+      if (vote === voteStatus) {
+        if (vote == "up") {
+          setVote((vote) => vote - 1);
+          setVoteStatus(null);
+          clearVoteColor();
+        } else if ((vote = "down")) {
+          setVote((vote) => vote + 1);
+          setVoteStatus(null);
+          clearVoteColor();
+        }
+      } else if (vote !== voteStatus) {
+        if (vote == "up") {
+          setVote((vote) => vote + 2);
+          setVoteStatus("up");
+          clearVoteColor();
+          changeVoteColor("up");
+        } else if (vote == "down") {
+          setVote((vote) => vote - 2);
+          setVoteStatus("down");
+          clearVoteColor();
+          changeVoteColor("down");
+        }
+      }
     }
   };
 
@@ -28,28 +108,30 @@ export default function Post(props) {
     } else {
       commentBlock.className = "block";
     }
-  }
+  };
 
   return (
     <>
       <div className="bg-white rounded-xl">
         <div
           className="grid grid-cols-1 w-full bg-white rounded-xl mb-4 gap-x-3 lg:grid-cols-post"
-          key={props.key}>
-
-            <div className="hidden lg:block mt-8 ml-4">
-              <div>
-                <div className="flex justify-center mb-2 text-gray-500">
-                  <FontAwesomeIcon icon={faArrowUp} className="text-3xl" />
-                </div>
-                <div className="text-center font-bold text-gray-500">
-                  {props.data.votes}
-                </div>
-                <div className="flex justify-center mt-2 text-gray-500">
-                  <FontAwesomeIcon icon={faArrowDown} className="text-3xl" />
-                </div>
-              </div>
+          key={props.key}
+        >
+          <div className="hidden lg:block mt-8 ml-4">
+            <div className="flex justify-center mt-2 text-gray-500">
+              <button className="mb-2 text-gray-500 hover:text-green-500" onClick={() => handleClickVote('up')} id={props.data.link + "lgUp"}>
+                <FontAwesomeIcon icon={faArrowUp} className="text-3xl" />
+              </button>
             </div>
+            <div className="text-center font-bold text-gray-500" id={props.data.link + "lgVote"}>
+              {vote}
+            </div>
+            <div className="flex justify-center mt-2 text-gray-500">
+              <button className="mb-2 text-gray-500 hover:text-red-500" onClick={() => handleClickVote('down')} id={props.data.link + "lgDown"}>
+                <FontAwesomeIcon icon={faArrowDown} className="text-3xl" />
+              </button>
+            </div>
+          </div>
 
           <div className="p-6">
             {/* This is Title Img Body div */}
@@ -71,24 +153,47 @@ export default function Post(props) {
                 </p>
               </div>
               <div className="w-full">
-                <img className="w-full" src={props.data.imageUrl} />
+                {
+                  props.data.imageUrl !== 'self' &&
+                  props.data.imageUrl !== 'nsfw' &&
+                  props.data.imageUrl !== 'default' &&
+                  !props.data.imageUrl.includes('external')
+                  ? <img className="w-full" src={props.data.imageUrl} /> : <></>
+                }
               </div>
               <hr className="mt-4" />
 
               <div className="mt-2 flex justify-between">
                 <div className="flex gap-x-2 border px-2 rounded-md border-gray-500 lg:hidden">
-                  <div className="flex justify-center items-center mb-1 text-gray-500">
-                    <FontAwesomeIcon icon={faArrowUp} className="text-md" />
-                  </div>
-                  <div className="text-center font-bold text-gray-500">
-                    {props.data.votes}
-                  </div>
+                  <button
+                    id={props.data.link + "up"}
+                    className="flex hover:text-green-500 text-gray-500"
+                    onClick={() => handleClickVote("up")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowUp}
+                      className="text-md mt-1"
+                    />
+                  </button>
+                  <p
+                    className="text-gray-500 font-bold"
+                    id={props.data.link + "vote"}
+                  >
+                    {vote}
+                  </p>
                   <div>
                     <div className="w-px bg-gray-500 h-full"></div>
                   </div>
-                  <div className="flex justify-center items-center mb-1 text-gray-500">
-                    <FontAwesomeIcon icon={faArrowDown} className="text-md" />
-                  </div>
+                  <button
+                    id={props.data.link + "down"}
+                    className="flex hover:text-red-500 text-gray-500"
+                    onClick={() => handleClickVote("down")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowDown}
+                      className="text-md mt-1"
+                    />
+                  </button>
                 </div>
 
                 <div className="hidden lg:flex">
@@ -114,11 +219,7 @@ export default function Post(props) {
                 </button>
               </div>
             </div>
-
           </div>
-          {/* <div className="block" id={props.data.link}>
-            <Comments url={props.data.link} comments={comments} />
-          </div> */}
         </div>
         <div className="mb-4">
           <div className="block" id={props.data.link}>
