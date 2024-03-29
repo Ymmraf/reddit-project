@@ -10,9 +10,13 @@ const initialState = {
 export const fetchSubreddits = createAsyncThunk(
     'subreddits/fetchSubreddits',
     async () => {
-        const response = await fetch('https://www.reddit.com/subreddits.json')
-        const json = await response.json()
-        return json
+        try {
+            const response = await fetch('https://www.reddit.com/subreddits.json')
+            const json = await response.json()
+            return json
+        } catch (Error) {
+            return Error
+        }
     }
 )
 

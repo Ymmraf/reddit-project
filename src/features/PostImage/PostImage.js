@@ -4,8 +4,7 @@ export default function PostImage({ imageUrl }) {
       <div className="w-full">
         {imageUrl !== "self" &&
         imageUrl !== "nsfw" &&
-        imageUrl !== "default" &&
-        !imageUrl.includes("external") ? (
+        imageUrl !== "default" == false ? (
           <img className="w-full" src={imageUrl} />
         ) : (
           <></>

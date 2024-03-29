@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchComments } from "../../app/commentSlice";
 import { useState } from "react";
+import { addComment } from "../../app/commentSlice";
 import toggleDisplayComment from "../../utilities/toggleDisplayComment";
 import Comments from "../Comments/Comments";
 import LargeVoteButton from "../LargeVoteButton/LargeVoteButton";
@@ -19,12 +20,13 @@ export default function Post(props) {
   const [vote, setVote] = useState(props.data.votes);
   const [voteStatus, setVoteStatus] = useState(null);
 
-  console.log(post)
+  // console.log(post)
 
   const handleClickComment = (url) => {
     if (dataIsLoaded) {
       toggleDisplayComment(url);
     } else {
+      dispatch(addComment(url))
       dispatch(fetchComments(url));
       setDataIsLoaded(true);
     }
@@ -111,7 +113,6 @@ export default function Post(props) {
         <div className="grid grid-cols-1 w-full bg-white rounded-xl mb-4 gap-x-3 lg:grid-cols-post" key={props.key}>
           <LargeVoteButton onClick={handleClickVote} link={props.data.link} vote={vote}/>
           <div className="p-6">
-            {/* This is Title Img Body div */}
             <div>
               <SmallAuthor author={props.data.author} />
               <PostBody title={props.data.title} body={props.data.selftext}/>

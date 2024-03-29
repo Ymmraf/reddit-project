@@ -38,7 +38,12 @@ export const fetchComments = createAsyncThunk(
 const commentsSlice = createSlice({
     name: 'comments',
     initialState,
-    reducers: {},
+    reducers: {
+        addComment(state, action) {
+            state.comments[action.payload.url] = true
+            console.log(state.comments[action.payload.url])
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchComments.pending, (state) => {
@@ -58,4 +63,5 @@ const commentsSlice = createSlice({
     }
 })
 
+export const { addComment } = commentsSlice.actions
 export default commentsSlice.reducer
