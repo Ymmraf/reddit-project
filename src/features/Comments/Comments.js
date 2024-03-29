@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
@@ -11,15 +8,18 @@ export default function Comments({ url, comments }) {
   // console.log(isLoading);
   // console.log("The Url is " + url);
   // console.log(comments.comments[url]);
+
   if (comments.comments[url]) {
     if (isLoading) {
-      return (
-        <>
-          <div className="mb-8 flex justify-center">
-            <div className="spinner"></div>
-          </div>
-        </>
-      );
+      console.log('Loading')
+      return <h1>Loading</h1>
+      // return (
+      //   <>
+      //     <div className="mb-8 flex justify-center">
+      //       <div className="spinner"></div>
+      //     </div>
+      //   </>
+      // );
     } else if (hasError) {
       return (
         <>
